@@ -1,8 +1,11 @@
 from pathlib import Path
 import os
+import django_heroku
+import dj_database_url
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -14,7 +17,6 @@ SECRET_KEY = 'nae+au==a_4%7v9^k141fa08#bt+53340wkv6*a58vfpx9u*_3'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -36,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'sito_officina.urls'
@@ -59,7 +62,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sito_officina.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -69,7 +71,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -89,7 +90,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -103,7 +103,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -113,14 +112,18 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Email settings
 
-EMAIL_HOST= 'smtp.gmail.com'
-EMAIL_PORT= 587
-EMAIL_HOST_USER='davide.piu.94@gmail.com'
-EMAIL_HOST_PASSWORD='********'
-EMAIL_USE_TLS=True
-#EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL='davide.piu.94@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'davide.piu.94@gmail.com'
+EMAIL_HOST_PASSWORD = '********'
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'davide.piu.94@gmail.com'
+
+
+django_heroku.settings(locals())
 

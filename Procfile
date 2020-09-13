@@ -1,0 +1,1 @@
+web: gunicorn sito_officina.wsgi
